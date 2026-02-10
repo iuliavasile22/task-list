@@ -15,14 +15,14 @@
 .my-to-do-app {
   width: 100%;
   max-width: 580px;
-  background: lightblue;
+   background: #ebebeb;
   margin: 120px auto 10px;
   padding: 65px 30px 70px;
   border-radius: 20px;
 }
 
 .my-to-do-app h1 {
-  color: #0d4196;
+  color: #ec5c08;
   display: flex;
   align-items: center;
   margin-left: 15px;
@@ -37,9 +37,84 @@
 .row {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  background: #edeef0ec;
-  border-radius: 25px;
-  padding-left: 30px;
-  margin-bottom: 25px;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+#input-box {
+  flex: 1;
+  height: 44px; /* same height as button */
+  padding: 0 14px; /* vertical handled by height */
+  font-size: 16px;
+
+  background: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 12px;
+  outline: none;
+
+  box-sizing: border-box;
+}
+
+/* nicer focus */
+#input-box:focus {
+  border-color: rgba(255, 255, 255, 0.75);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.18);
+}
+
+.row button {
+  height: 44px;
+  padding: 0 18px;
+  border: none;
+  border-radius: 12px;
+  background-color: #ec5c08;
+  color: white;
+
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    transform 0.15s ease,
+    background 0.15s ease,
+    opacity 0.15s ease;
+}
+
+.row button:hover {
+  background: #b64909;
+  transform: translateY(-1px);
+}
+
+.row button:active {
+  transform: translateY(0);
+  opacity: 0.9;
+}
+
+ul li {
+  list-style: none; //style of list
+  font-size: 17px;
+  padding: 15px 8px 15px 50px;
+  user-select: none;  //to not accidentally select text with mouse
+  cursor: pointer;
+  position: relative;
+}
+
+ul li::before{
+  content: '';
+  position: absolute;
+  height: 28px;
+  width: 28px;
+  border-radius: 50%;
+  background-image: url("images/unchecked.png");
+  background-size: cover;
+  background-position: center;
+  top: 12px;
+  left: 8px;
+}
+
+
+ul li.checked{
+  color: #555;
+  text-decoration: line-through;
+}
+
+ul li.checked::before{
+  background-image: url("images/checked.png");
 }
