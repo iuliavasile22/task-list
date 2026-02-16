@@ -19,6 +19,7 @@ function addTask() {
   li.appendChild(span);
   }
   inputBoxElement.value = "";
+  saveListData();
 }
 
 
@@ -28,3 +29,25 @@ inputBoxElement.addEventListener("keydown", function(event){
   }
 });
 
+
+listContainerElement.addEventListener("click", function(e){
+  if(e.target.tagName === "LI"){
+    e.target.classList.toggle("checked");
+    saveListData();
+  }
+  else if(e.target.tagName === "SPAN"){
+    e.target.parentElement.remove();
+    saveListData();
+  }
+}, false);
+
+
+function saveListData(){
+  localStorage.setItem("data", listContainerElement.innerHTML);
+}
+
+function showTask(){
+  listContainerElement.innerHTML = localStorage.getItem("data");
+}
+
+showTask();
