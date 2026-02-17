@@ -99,16 +99,28 @@ let list_task = [];
         li.appendChild(span);
         listContainerElement.appendChild(li);
         
-      });
+    });
     }
+
+    listContainerElement.addEventListener("click", function(e)){
+      if(e.target.tagName === "SPAN"){
+        const li = e.target.parentElement;
+        const id = Number(li.dataset.id);
+
+        deleteTask(id);
+      }
+    });
+    
+
+
     function saveListData(){
-      localStorage.setItem("task", JSON.stringify(task));
+      localStorage.setItem("list_task", JSON.stringify(list_task));
     }
 
     function showTask(){
-      const data = localStorage.getItem("task");
+      const data = localStorage.getItem("list_task");
       if(data){
-        task = JSON.parse(data);
+        list_task = JSON.parse(data);
       }
       renderTasks();
     }

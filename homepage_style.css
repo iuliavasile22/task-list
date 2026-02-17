@@ -41,7 +41,7 @@
   margin-top: 16px;
 }
 
-#input-box {
+#inputElement{
   flex: 1;
   height: 44px; /* same height as button */
   padding: 0 14px; /* vertical handled by height */
@@ -56,7 +56,7 @@
 }
 
 /* nicer focus */
-#input-box:focus {
+#inputElement:focus {
   border-color: rgba(255, 255, 255, 0.75);
   box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.18);
 }
