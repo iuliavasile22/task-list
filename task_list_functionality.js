@@ -2,7 +2,7 @@ const inputElement = document.getElementById("inputElement");
 
 const listContainerElement = document.getElementById("list-container");
 
-const errorInput = document.getElementById("error");
+const errorMessage = document.getElementById("error-message");
 
 const counter = document.getElementById("counter");
 
@@ -17,33 +17,33 @@ let list_task = [];
   //it exceeds the limmit, shows error
 
   if(len > MAX_LENGTH){
-    showError( `Max ${MAX_LENGTH} characters allowed`);
+    showErrorMessage( `Max ${MAX_LENGTH} characters allowed`);
   }else{
-    clearError();
+    disableErrorMessage();
   }
   });
 
-  function showError(msg){
-    errorInput.style.display = "block";
-    errorInput.textContent = msg;
+  function showErrorMessage(message){
+    errorMessage.textContent = message //set text
+    errorMessage.style.display = "block"; //display message
   }
+   
 
-  function clearError(){
-    errorInput.style.display = "none";
-    errorInput.textContent = msg;
+  function disableErrorMessage(){
+   errorMessage.textContent = "";
+   errorMessage.style.display = "none";
   }
-
 
   function handleAddTask(){
     const task_text = inputElement.value.trim();
 
-    if(task_text.length === 0){
-      showError("Task added is empty! ERROR!");
+    if(!task_text){
+      showErrorMessage("Field empty. Please enter a task.");
       return;
     }
-    clearError();
+    disableErrorMessage();
 
-    //add list task
+    
     addTask(task_text);
 
     inputElement.value = "";
@@ -58,18 +58,31 @@ let list_task = [];
         alert("Textbox empty! Error!");
         return;   // stop execution here
       }
-     const task = {
+
+      //duplicate tasks check
+      const defaultText = value.toLowerCase();
+
+      const duplicate = list_task.some(t => typeof t.title === "string" && t.title.trim().toLowerCase() === defaultText);
+
+      if(duplicate){
+        alert("Duplicate task! Can't add to the list!");
+        inputElement.value = "";
+        inputElement.focus();
+        return;
+      }
+
+      const task = {
       id: Date.now(),
       title: value,
       done: false
      };
 
       list_task.push(task);
-
-      renderTasks();
       saveListData();
+      renderTasks();
 
       inputElement.value ="";
+      inputElement.focus();
 
     }
 
@@ -94,24 +107,38 @@ let list_task = [];
         li.dataset.id = task.id;
 
         let span = document.createElement("span");
-        span.innerHTML = "\u00d7";
+        span.textContent = "\u00d7";
 
         li.appendChild(span);
         listContainerElement.appendChild(li);
         
-    });
+      
+      })
     }
 
-    listContainerElement.addEventListener("click", function(e)){
-      if(e.target.tagName === "SPAN"){
+    listContainerElement.addEventListener("click", function(e){
+       if(e.target.tagName === "SPAN"){
         const li = e.target.parentElement;
         const id = Number(li.dataset.id);
 
         deleteTask(id);
-      }
+    }
     });
-    
 
+    function deleteTask(id){
+      const itemDelete = document.querySelector(`li[data-id="${id}"]`);
+
+      if(!itemDelete) return;
+
+      itemDelete.remove();
+
+      //for storage and reload
+      list_task = list_task.filter(task => task.id !== id);
+
+      saveListData();
+      renderTasks();
+    }
+    
 
     function saveListData(){
       localStorage.setItem("list_task", JSON.stringify(list_task));

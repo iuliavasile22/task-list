@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>To-Do List App</title>
 
-  <link rel="stylesheet" href="homepage_style.css">
+  <link rel="stylesheet" href="task_list_style.css">
 
 <body>
   <div class="content-container">
@@ -14,7 +14,9 @@
    <h1>My To-do List <img src="images/icon.png" alt="to-do-list-icon"></h1>
    <div class="row">
     <input type="text" id="inputElement" placeholder="Add an item (max 50 chars)">
-    <small id="error" style="color: red; display: none;"></small>
+
+    <small id="error-message" style="color: red; display: none;"></small>
+
     <small id="counter"></small>
     <button onclick="addTask()">Add</button>
    </div>
@@ -22,6 +24,6 @@
    </ul>
    </div>
   </div>
-  <script src="list-functionality.js"></script>
+  <script src="task_list_functionality.js"></script>
 </body>
 </html>
