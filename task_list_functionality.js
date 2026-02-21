@@ -34,28 +34,12 @@ let list_task = [];
    errorMessage.style.display = "none";
   }
 
-  function handleAddTask(){
-    const task_text = inputElement.value.trim();
-
-    if(!task_text){
-      showErrorMessage("Field empty. Please enter a task.");
-      return;
-    }
-    disableErrorMessage();
-
-    
-    addTask(task_text);
-
-    inputElement.value = "";
-    counter.textContent = `0 / ${MAX_LENGTH}`;
-
-  }
-
   function addTask() {
       const value = inputElement.value.trim();   // removes spaces
 
-      if (value === "") {
-        alert("Textbox empty! Error!");
+      if (!value) {
+        showErrorMessage("Field empty. Please enter task.")
+        inputElement.focus();
         return;   // stop execution here
       }
 
@@ -64,12 +48,14 @@ let list_task = [];
 
       const duplicate = list_task.some(t => typeof t.title === "string" && t.title.trim().toLowerCase() === defaultText);
 
-      if(duplicate){
-        alert("Duplicate task! Can't add to the list!");
-        inputElement.value = "";
-        inputElement.focus();
-        return;
-      }
+     if(duplicate){
+      showErrorMessage("Duplicate task.");
+      inputElement.select();
+      inputElement.focus();
+      return;
+     }
+
+     disableErrorMessage();
 
       const task = {
       id: Date.now(),
@@ -78,11 +64,14 @@ let list_task = [];
      };
 
       list_task.push(task);
+
       saveListData();
       renderTasks();
 
+      //reset UI
       inputElement.value ="";
       inputElement.focus();
+      counter.textContent = `0 / ${MAX_LENGTH}`;
 
     }
 
@@ -91,13 +80,14 @@ let list_task = [];
         addTask();
       }
     });
+    inputElement.addEventListener("input", disableErrorMessage);
 
 
     function renderTasks(){
       listContainerElement.innerHTML = ""; //clear list
 
       list_task.forEach(task => {
-        let li = document.createElement("li");
+        let li = document.createElement("li");        
         li.textContent = task.title;
 
         if(task.done){
@@ -122,6 +112,7 @@ let list_task = [];
         const id = Number(li.dataset.id);
 
         deleteTask(id);
+        return;
     }
     });
 
