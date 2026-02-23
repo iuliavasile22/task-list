@@ -27,7 +27,6 @@ let list_task = [];
     errorMessage.textContent = message //set text
     errorMessage.style.display = "block"; //display message
   }
-   
 
   function disableErrorMessage(){
    errorMessage.textContent = "";
@@ -40,7 +39,7 @@ let list_task = [];
       if (!value) {
         showErrorMessage("Field empty. Please enter task.")
         inputElement.focus();
-        return;   // stop execution here
+        return;   
       }
 
       //duplicate tasks check
@@ -49,7 +48,7 @@ let list_task = [];
       const duplicate = list_task.some(t => typeof t.title === "string" && t.title.trim().toLowerCase() === defaultText);
 
      if(duplicate){
-      showErrorMessage("Duplicate task.");
+      showErrorMessage("Duplicate task. Can't add!");
       inputElement.select();
       inputElement.focus();
       return;
@@ -72,22 +71,21 @@ let list_task = [];
       inputElement.value ="";
       inputElement.focus();
       counter.textContent = `0 / ${MAX_LENGTH}`;
-
     }
 
+    inputElement.addEventListener("input", disableErrorMessage);
+    
     inputElement.addEventListener("keydown", function(event){
       if (event.key === "Enter") {
         addTask();
       }
     });
-    inputElement.addEventListener("input", disableErrorMessage);
-
-
+   
     function renderTasks(){
       listContainerElement.innerHTML = ""; //clear list
 
       list_task.forEach(task => {
-        let li = document.createElement("li");        
+        const li = document.createElement("li");        
         li.textContent = task.title;
 
         if(task.done){
@@ -96,13 +94,11 @@ let list_task = [];
 
         li.dataset.id = task.id;
 
-        let span = document.createElement("span");
+        const span = document.createElement("span");
         span.textContent = "\u00d7";
 
         li.appendChild(span);
         listContainerElement.appendChild(li);
-        
-      
       })
     }
 
@@ -114,7 +110,21 @@ let list_task = [];
         deleteTask(id);
         return;
     }
-    });
+
+    //when item checked, cross off list
+    if(e.target.tagName === "LI"){
+      e.target.classList.toggle("checked");
+
+      //set done state in task list
+      const id = Number(e.target.dataset.id);
+      const task = list_task.find(t => t.id === id);
+
+      if(task){
+        task.done = !task.done;
+        saveListData();
+      }
+    }
+  });
 
     function deleteTask(id){
       const itemDelete = document.querySelector(`li[data-id="${id}"]`);

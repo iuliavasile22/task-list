@@ -15,7 +15,7 @@
 .my-to-do-app {
   width: 100%;
   max-width: 580px;
-   background: #ebebeb;
+  background: #ebebeb;
   margin: 120px auto 10px;
   padding: 65px 30px 70px;
   border-radius: 20px;
@@ -41,7 +41,7 @@
   margin-top: 16px;
 }
 
-#inputElement{
+#inputElement {
   flex: 1;
   height: 44px; /* same height as button */
   padding: 0 14px; /* vertical handled by height */
@@ -55,10 +55,14 @@
   box-sizing: border-box;
 }
 
-/* nicer focus */
 #inputElement:focus {
   border-color: rgba(255, 255, 255, 0.75);
   box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.18);
+}
+
+#error-message {
+  color: red;
+  display: none;
 }
 
 .row button {
@@ -73,7 +77,7 @@
   cursor: pointer;
   transition:
     transform 0.15s ease,
-    background 0.15s ease,
+    background-color 0.15s ease,
     opacity 0.15s ease;
 }
 
@@ -87,51 +91,77 @@
   opacity: 0.9;
 }
 
-ul li {
-  list-style: none; //style of list
+#list-container li {
+  position: relative;
+  list-style: none;
   font-size: 17px;
   padding: 15px 8px 15px 50px;
-  user-select: none;  //to not accidentally select text with mouse
+  user-select: none; /*to not accidentally select all text with mouse */
+  transition:
+    background-color 0.2s ease,
+    opacity 0.2s ease;
   cursor: pointer;
-  position: relative;
 }
 
-ul li::before{
-  content: '';
+#list-container li:before {
+  content: "";
   position: absolute;
-  height: 28px;
-  width: 28px;
-  border-radius: 50%;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 24px;
   background-image: url("images/unchecked.png");
   background-size: cover;
-  background-position: center;
-  top: 12px;
-  left: 8px;
 }
 
-
-ul li.checked{
-  color: #555;
-  text-decoration: line-through;
-}
-
-ul li.checked::before{
+#list-container li.checked::before {
+  content: "";
   background-image: url("images/checked.png");
-}
-
-ul li span{
-  position: absolute;
-  right:0;
-  top:5px;
-  width: 45px;
-  height: 45px;
-  font-size: 22px;
-  color: #7a7676;
-  line-height: 45px;
+  color: white;
+  font-size: 12px;
   text-align: center;
-  border-radius: 40%;
+  line-height: 18px;
 }
 
-ul li span:hover{
+#list-container li.checked {
+  color: #6d778b;
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
+  text-decoration-color: #9ca3af;
+  opacity: 0.7;
+  transition: all 0.2s ease;
+}
+
+#list-container li span {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  width: 30px;
+  height: 30px;
+
+  transform: translateY(-50%);
+
+  font-size: 18px;
+  color: #7a7676;
+  line-height: 30px;
+  text-align: center;
+
+  border-radius: 50%;
+  cursor: pointer;
+  transition:
+    transform 0.12s ease,
+    background-color 0.15s ease;
+}
+
+#list-container li span:hover {
   background: #eef0f3;
+
+  /* scale up */
+  transform: translateY(-50%) scale(1.05);
+}
+
+#list-container li span:active {
+  /* effect when pressing button*/
+  transform: translateY(-50%) scale(0.95);
 }
