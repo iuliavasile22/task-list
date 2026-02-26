@@ -117,7 +117,7 @@
 
 #list-container li.checked::before {
   content: "";
-  background-image: url("images/checked.png");
+  background-image: url("images/checked_icon.png");
   color: white;
   font-size: 12px;
   text-align: center;
