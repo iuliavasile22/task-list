@@ -89,7 +89,7 @@ let list_task = [];
         li.textContent = task.title;
 
         if(task.done){
-          li.classList.add("checked_icon");
+          li.classList.add("checked");
         }
 
         li.dataset.id = task.id;
@@ -111,9 +111,9 @@ let list_task = [];
         return;
     }
 
-    //when item checked, cross off list
+
     if(e.target.tagName === "LI"){
-      e.target.classList.toggle("checked_icon");
+      e.target.classList.toggle("checked");
 
       //set done state in task list
       const id = Number(e.target.dataset.id);

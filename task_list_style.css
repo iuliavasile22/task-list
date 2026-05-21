@@ -12,7 +12,7 @@
   padding: 10px;
 }
 
-.my-to-do-app {
+.my-task-list-app {
   width: 100%;
   max-width: 580px;
   background: #ebebeb;
@@ -21,15 +21,15 @@
   border-radius: 20px;
 }
 
-.my-to-do-app h1 {
-  color: #ec5c08;
+.my-task-list-app h1 {
+  color: #2563eb;
   display: flex;
   align-items: center;
   margin-left: 15px;
   margin-bottom: 15px;
 }
 
-.my-to-do-app h1 img {
+.my-task-list-app h1 img {
   width: 70px;
   margin-left: 10px;
 }
@@ -70,7 +70,7 @@
   padding: 0 18px;
   border: none;
   border-radius: 12px;
-  background-color: #ec5c08;
+  background-color: #1d4ed8;
   color: white;
 
   font-weight: 600;
@@ -82,7 +82,7 @@
 }
 
 .row button:hover {
-  background: #b64909;
+  background: #0f2044;
   transform: translateY(-1px);
 }
 
@@ -117,7 +117,8 @@
 
 #list-container li.checked::before {
   content: "";
-  background-image: url("images/checked_icon.png");
+  background-image: url("images/checked.png");
+  background-size: cover;
   color: white;
   font-size: 12px;
   text-align: center;
